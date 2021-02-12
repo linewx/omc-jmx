@@ -1,16 +1,11 @@
 # -*- coding: utf-8 -*-
 import json
 import os
-from os.path import exists
-
-from omc.config import settings
 
 from omc.common import CmdTaskMixin
+from omc.config import settings
 from omc.core import Resource
-import pkg_resources
-
 from omc.core.decorator import filecache
-from omc.utils import JmxTermUtils
 
 from omc_jmx import utils
 
