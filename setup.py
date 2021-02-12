@@ -1,12 +1,12 @@
 from setuptools import setup, find_packages
 install_requires = [
-    'omc>0.0.15'
+    'omc>=0.2.1'
 ]
 
 
 setup(
     name='omc-jmx',
-    version="0.0.1",
+    version="0.0.2",
     description='jmx plugin for omc',
     license='MIT',
     author='Lu Ganlin',
