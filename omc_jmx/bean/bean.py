@@ -7,6 +7,8 @@ from omc.common import CmdTaskMixin
 from omc.core import Resource
 from omc.utils import JmxTermUtils
 
+from omc_jmx import utils
+
 
 class Bean(Resource, CmdTaskMixin):
     def _run(self):
@@ -29,7 +31,7 @@ class Bean(Resource, CmdTaskMixin):
         return '\n'.join(results)
 
     def info(self):
-        jmxterm = pkg_resources.resource_filename(__name__, '../../../lib/jmxterm-1.0.2-uber.jar')
+        jmxterm = utils.get_jmxterm()
         jmx = self._get_one_resource_value('jmx')
         bean = self._get_one_resource_value()
         bean = bean.replace(" ", "\\ ")
@@ -68,7 +70,7 @@ class Bean(Resource, CmdTaskMixin):
                 print(one_attr['attribute'] + ":" + one_attr['raw_data'])
         else:
             attr_name = ' '.join(self._get_params())
-            jmxterm = pkg_resources.resource_filename(__name__, '../../../lib/jmxterm-1.0.2-uber.jar')
+            jmxterm = utils.get_jmxterm()
             jmx = self._get_one_resource_value('jmx')
             bean = self._get_one_resource_value()
             bean = bean.replace(" ", "\\ ")
