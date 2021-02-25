@@ -4,7 +4,7 @@ import pkg_resources
 from omc.core.decorator import filecache
 
 from omc.common import CmdTaskMixin
-from omc.core import Resource
+from omc.core import Resource, console
 from omc.utils import JmxTermUtils
 
 from omc_jmx import utils
@@ -47,7 +47,7 @@ class Bean(Resource, CmdTaskMixin):
             result = self.run_cmd(JmxTermUtils.build_command(short_cmd), capture_output=True, verbose=False)
             output = result.stdout.decode('utf-8').splitlines()
             for one_attr in (self._list_operation_resources(self._parse_info(output))):
-                print(one_attr['method'] + ":" + one_attr['raw_data'])
+                console.log(one_attr['method'] + ":" + one_attr['raw_data'])
         else:
             attr_name = ' '.join(self._get_params())
             jmx = self._get_one_resource_value('jmx')
@@ -67,7 +67,7 @@ class Bean(Resource, CmdTaskMixin):
 
             output = result.stdout.decode('utf-8').splitlines()
             for one_attr in (self._list_readable_resources(self._parse_info(output))):
-                print(one_attr['attribute'] + ":" + one_attr['raw_data'])
+                console.log(one_attr['attribute'] + ":" + one_attr['raw_data'])
         else:
             attr_name = ' '.join(self._get_params())
             jmxterm = utils.get_jmxterm()
@@ -86,7 +86,7 @@ class Bean(Resource, CmdTaskMixin):
             result = self.run_cmd(JmxTermUtils.build_command(short_cmd), capture_output=True, verbose=False)
             output = result.stdout.decode('utf-8').splitlines()
             for one_attr in (self._list_writable_resources(self._parse_info(output))):
-                print(one_attr['attribute'] + ":" + one_attr['raw_data'])
+                console.log(one_attr['attribute'] + ":" + one_attr['raw_data'])
         else:
             attr_name = ' '.join(self._get_params())
             jmx = self._get_one_resource_value('jmx')
