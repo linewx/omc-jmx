@@ -1,13 +1,9 @@
 import re
 
-import pkg_resources
-from omc.core.decorator import filecache
-
 from omc.common import CmdTaskMixin
 from omc.core import Resource, console
-from omc.utils import JmxTermUtils
-
-from omc_jmx import utils
+from omc.core.decorator import filecache
+from omc_jmx.utils import JmxTermUtils
 
 
 class Bean(Resource, CmdTaskMixin):
@@ -31,12 +27,11 @@ class Bean(Resource, CmdTaskMixin):
         return '\n'.join(results)
 
     def info(self):
-        jmxterm = utils.get_jmxterm()
         jmx = self._get_one_resource_value('jmx')
         bean = self._get_one_resource_value()
         bean = bean.replace(" ", "\\ ")
-        cmd = 'echo "open %s && bean %s && info"  | java -jar %s -n' % (jmx, bean, jmxterm)
-        self.run_cmd(cmd)
+        cmd = "open %s && bean %s && info" % (jmx, bean)
+        self.run_cmd(JmxTermUtils.build_command(cmd))
 
     def exec(self):
         if 'completion' in self._get_params():
@@ -70,12 +65,11 @@ class Bean(Resource, CmdTaskMixin):
                 console.log(one_attr['attribute'] + ":" + one_attr['raw_data'])
         else:
             attr_name = ' '.join(self._get_params())
-            jmxterm = utils.get_jmxterm()
             jmx = self._get_one_resource_value('jmx')
             bean = self._get_one_resource_value()
             bean = bean.replace(" ", "\\ ")
-            cmd = 'echo "open %s && bean %s && get %s"  | java -jar %s -n' % (jmx, bean, attr_name, jmxterm)
-            self.run_cmd(cmd)
+            cmd = "open %s && bean %s && get %s" % (jmx, bean, attr_name)
+            self.run_cmd(JmxTermUtils.build_command(cmd))
 
     def set(self):
         if 'completion' in self._get_params():
